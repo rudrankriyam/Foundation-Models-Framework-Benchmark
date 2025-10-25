@@ -42,6 +42,7 @@ final class BenchmarkViewModel {
     var result: BenchmarkResult?
     var errorMessage: String?
     var lastSavedURL: URL?
+    var streamingPreview: String = ""
 
     // MARK: - Prompt / Options
 
@@ -66,6 +67,7 @@ final class BenchmarkViewModel {
         isRunning = true
         errorMessage = nil
         result = nil
+        streamingPreview = ""
         runCount += 1
 
         appendStatus("Run #\(runCount) started.")
@@ -81,7 +83,10 @@ final class BenchmarkViewModel {
             let runner = BenchmarkRunner(configuration: configuration)
 
             do {
-                let benchmarkResult = try await runner.run()
+                let benchmarkResult = try await runner.run { [weak self] partial in
+                    guard let self else { return }
+                    await self.updateStreamingPreview(partial)
+                }
                 await self.handleSuccess(benchmarkResult)
             } catch {
                 await self.handleFailure(error)
@@ -180,6 +185,7 @@ final class BenchmarkViewModel {
 
     private func handleSuccess(_ benchmarkResult: BenchmarkResult) {
         result = benchmarkResult
+        streamingPreview = benchmarkResult.responseText
         let duration = String(format: "%.2f", benchmarkResult.metrics.duration)
         appendStatus("Completed successfully in \(duration)s.")
         isRunning = false
@@ -189,9 +195,15 @@ final class BenchmarkViewModel {
         errorMessage = error.localizedDescription
         appendStatus("Failed: \(error.localizedDescription)")
         isRunning = false
+        streamingPreview = ""
     }
 
     private func appendStatus(_ text: String) {
         statusMessages.append(StatusMessage(timestamp: Date(), text: text))
+    }
+
+    @MainActor
+    private func updateStreamingPreview(_ text: String) {
+        streamingPreview = text
     }
 }

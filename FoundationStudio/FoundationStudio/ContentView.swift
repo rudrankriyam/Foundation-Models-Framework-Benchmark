@@ -10,7 +10,7 @@ import SwiftUI
 
 struct ContentView: View {
     @State private var viewModel = BenchmarkViewModel()
-
+    
     var body: some View {
         NavigationStack {
             ScrollView {
@@ -22,47 +22,50 @@ struct ContentView: View {
                         exportSection
                     }
                     logSection
+                    if viewModel.isRunning || !viewModel.streamingPreview.isEmpty {
+                        streamingSection
+                    }
                 }
                 .padding()
             }
             .navigationTitle("Foundation Benchmark")
         }
     }
-
+    
     private var promptSection: some View {
         sectionCard(title: "Benchmark Prompt") {
             Text("Instructions")
                 .font(.headline)
             Text(viewModel.prompt.instructions)
                 .font(.body)
-
+            
             Divider()
-
+            
             Text("User Prompt")
                 .font(.headline)
             Text(viewModel.prompt.userPrompt)
                 .font(.body)
         }
     }
-
+    
     private var executionSection: some View {
         sectionCard(title: "Execution") {
             Button(action: viewModel.runBenchmark) {
                 Label(viewModel.isRunning ? "Benchmark Running…" : "Run Benchmark",
                       systemImage: viewModel.isRunning ? "hourglass" : "play.circle.fill")
-                    .font(.headline)
-                    .frame(maxWidth: .infinity)
+                .font(.headline)
+                .frame(maxWidth: .infinity)
             }
             .tint(.indigo)
             .controlSize(.large)
             .buttonStyle(.borderedProminent)
             .disabled(viewModel.isRunning)
-
+            
             if viewModel.isRunning {
                 ProgressView("Streaming response…")
                     .progressViewStyle(.linear)
             }
-
+            
             if let error = viewModel.errorMessage {
                 Text(error)
                     .font(.callout)
@@ -74,7 +77,7 @@ struct ContentView: View {
             }
         }
     }
-
+    
     private func metricsSection(for result: BenchmarkResult) -> some View {
         sectionCard(title: "Latest Result") {
             metricsGrid(for: result)
@@ -93,7 +96,7 @@ struct ContentView: View {
                 .foregroundStyle(.secondary)
         }
     }
-
+    
     private func metricsGrid(for result: BenchmarkResult) -> some View {
         VStack(alignment: .leading, spacing: 8) {
             metricRow(title: "Duration", value: format(seconds: result.metrics.duration))
@@ -104,7 +107,7 @@ struct ContentView: View {
             metricRow(title: "Total Tokens (est.)", value: "\(result.metrics.totalTokenEstimate)")
         }
     }
-
+    
     private func metricRow(title: String, value: String) -> some View {
         HStack {
             Text(title)
@@ -114,7 +117,25 @@ struct ContentView: View {
                 .bold()
         }
     }
-
+    
+    private var streamingSection: some View {
+        sectionCard(title: viewModel.isRunning ? "Streaming Output" : "Last Response") {
+            if viewModel.streamingPreview.isEmpty {
+                Text("Awaiting tokens…")
+                    .font(.callout)
+                    .foregroundStyle(.secondary)
+            } else {
+                ScrollView {
+                    Text(viewModel.streamingPreview)
+                        .font(.system(.body, design: .monospaced))
+                        .textSelection(.enabled)
+                        .frame(maxWidth: .infinity, alignment: .leading)
+                }
+                .frame(maxHeight: 220)
+            }
+        }
+    }
+    
     private var exportSection: some View {
         sectionCard(title: "Export & Share") {
             VStack(spacing: 12) {
@@ -125,7 +146,7 @@ struct ContentView: View {
                         Label("Copy Markdown", systemImage: "doc.on.doc")
                     }
                     .buttonStyle(.bordered)
-
+                    
                     Button {
                         trySaveReport(format: .json(prettyPrinted: true))
                     } label: {
@@ -133,7 +154,7 @@ struct ContentView: View {
                     }
                     .buttonStyle(.bordered)
                 }
-
+                
                 HStack {
                     Button {
                         trySaveReport(format: .markdown)
@@ -141,7 +162,7 @@ struct ContentView: View {
                         Label("Save Markdown", systemImage: "square.and.arrow.down.on.square")
                     }
                     .buttonStyle(.bordered)
-
+                    
                     if let url = viewModel.lastSavedURL {
                         ShareLink(item: url) {
                             Label("Share Last Export", systemImage: "square.and.arrow.up")
@@ -157,7 +178,7 @@ struct ContentView: View {
             }
         }
     }
-
+    
     private var logSection: some View {
         sectionCard(title: "Status Log") {
             if viewModel.statusMessages.isEmpty {
@@ -183,7 +204,7 @@ struct ContentView: View {
             }
         }
     }
-
+    
     private func trySaveReport(format: BenchmarkViewModel.ExportFormat) {
         do {
             _ = try viewModel.saveReport(to: format)
@@ -191,21 +212,21 @@ struct ContentView: View {
             viewModel.errorMessage = error.localizedDescription
         }
     }
-
+    
     private func format(seconds: TimeInterval) -> String {
         String(format: "%.2fs", seconds)
     }
-
+    
     private func formatOptional(seconds: TimeInterval?) -> String {
         guard let seconds else { return "n/a" }
         return format(seconds: seconds)
     }
-
+    
     private func formatOptional(number: Double?) -> String {
         guard let number else { return "n/a" }
         return String(format: "%.2f", number)
     }
-
+    
     private func sectionCard<Content: View>(title: String, @ViewBuilder content: () -> Content) -> some View {
         VStack(alignment: .leading, spacing: 12) {
             Text(title)

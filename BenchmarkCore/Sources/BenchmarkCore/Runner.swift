@@ -43,7 +43,7 @@ public actor BenchmarkRunner {
         self.configuration = configuration
     }
 
-    public func run() async throws -> BenchmarkResult {
+    public func run(onPartial: (@Sendable (String) async -> Void)? = nil) async throws -> BenchmarkResult {
         try ensureModelAvailability()
 
         let session = LanguageModelSession(
@@ -64,6 +64,9 @@ public actor BenchmarkRunner {
                 firstTokenDate = Date()
             }
             responseText = renderPartialText(from: snapshot)
+            if let onPartial {
+                await onPartial(responseText)
+            }
         }
 
         guard !responseText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {
