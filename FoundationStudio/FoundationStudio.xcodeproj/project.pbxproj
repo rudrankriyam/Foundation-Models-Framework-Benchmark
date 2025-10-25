@@ -6,6 +6,10 @@
 	objectVersion = 77;
 	objects = {
 
+/* Begin PBXBuildFile section */
+		0A2230E72EACD3C900E09810 /* BenchmarkCore in Frameworks */ = {isa = PBXBuildFile; productRef = 0A2230E62EACD3C900E09810 /* BenchmarkCore */; };
+/* End PBXBuildFile section */
+
 /* Begin PBXFileReference section */
 		0A2230D02EACD0FC00E09810 /* FoundationStudio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoundationStudio.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		0A2230E42EACD14800E09810 /* BenchmarkCore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BenchmarkCore; path = ../BenchmarkCore; sourceTree = SOURCE_ROOT; };
@@ -24,6 +28,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				0A2230E72EACD3C900E09810 /* BenchmarkCore in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -35,6 +40,7 @@
 			children = (
 				0A2230E42EACD14800E09810 /* BenchmarkCore */,
 				0A2230D22EACD0FC00E09810 /* FoundationStudio */,
+				0A2230E52EACD3C900E09810 /* Frameworks */,
 				0A2230D12EACD0FC00E09810 /* Products */,
 			);
 			sourceTree = "<group>";
@@ -45,6 +51,13 @@
 				0A2230D02EACD0FC00E09810 /* FoundationStudio.app */,
 			);
 			name = Products;
+			sourceTree = "<group>";
+		};
+		0A2230E52EACD3C900E09810 /* Frameworks */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Frameworks;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -67,6 +80,7 @@
 			);
 			name = FoundationStudio;
 			packageProductDependencies = (
+				0A2230E62EACD3C900E09810 /* BenchmarkCore */,
 			);
 			productName = FoundationStudio;
 			productReference = 0A2230D02EACD0FC00E09810 /* FoundationStudio.app */;
@@ -355,6 +369,13 @@
 			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
+
+/* Begin XCSwiftPackageProductDependency section */
+		0A2230E62EACD3C900E09810 /* BenchmarkCore */ = {
+			isa = XCSwiftPackageProductDependency;
+			productName = BenchmarkCore;
+		};
+/* End XCSwiftPackageProductDependency section */
 	};
 	rootObject = 0A2230C82EACD0FC00E09810 /* Project object */;
 }

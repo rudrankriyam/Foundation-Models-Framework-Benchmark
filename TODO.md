@@ -13,8 +13,8 @@
 - [x] Add `BenchmarkReport` capable of serializing run metadata + metrics to JSON/Markdown.
 
 ## macOS Benchmark App
-- [ ] Create a SwiftUI macOS app target that links `BenchmarkCore`.
-- [ ] Design UI with “Run Benchmark” button, live log output, and summary card (metrics + environment snapshot).
+- [x] Create a SwiftUI macOS app target that links `BenchmarkCore`.
+- [x] Design UI with “Run Benchmark” button, live log output, and summary card (metrics + environment snapshot).
 - [ ] Implement export workflow (save/share report) and persistent storage of past runs (`Application Support/BenchmarkResults`).
 
 ## iOS & iPadOS Benchmark App
