@@ -64,7 +64,8 @@ public struct BenchmarkReport: Codable, Sendable {
         # Foundation Models Benchmark
 
         **Timestamp:** \(result.environment.timestamp)
-        **Device:** \(result.environment.deviceName) • \(result.environment.systemName) \(result.environment.systemVersion)
+        **Device:** \(result.environment.deviceName) • \(result.environment.systemName) \
+        \(result.environment.systemVersion)
         **Locale:** \(result.environment.localeIdentifier)
 
         ## Metrics

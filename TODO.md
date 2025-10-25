@@ -15,7 +15,7 @@
 ## macOS Benchmark App
 - [x] Create a SwiftUI macOS app target that links `BenchmarkCore`.
 - [x] Design UI with “Run Benchmark” button, live log output, and summary card (metrics + environment snapshot).
-- [ ] Implement export workflow (save/share report) and persistent storage of past runs (`Application Support/BenchmarkResults`).
+- [x] Implement export workflow (save/share report) and persistent storage of past runs (`Application Support/BenchmarkResults`).
 
 ## iOS & iPadOS Benchmark App
 - [ ] Add a universal SwiftUI app target (size-class aware layout) that reuses the macOS view model.
