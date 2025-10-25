@@ -8,6 +8,7 @@
 
 /* Begin PBXFileReference section */
 		0A2230D02EACD0FC00E09810 /* FoundationStudio.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = FoundationStudio.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		0A2230E42EACD14800E09810 /* BenchmarkCore */ = {isa = PBXFileReference; lastKnownFileType = wrapper; name = BenchmarkCore; path = ../BenchmarkCore; sourceTree = SOURCE_ROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFileSystemSynchronizedRootGroup section */
@@ -32,6 +33,7 @@
 		0A2230C72EACD0FC00E09810 = {
 			isa = PBXGroup;
 			children = (
+				0A2230E42EACD14800E09810 /* BenchmarkCore */,
 				0A2230D22EACD0FC00E09810 /* FoundationStudio */,
 				0A2230D12EACD0FC00E09810 /* Products */,
 			);

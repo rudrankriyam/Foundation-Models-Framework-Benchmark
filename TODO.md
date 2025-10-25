@@ -6,7 +6,7 @@
 - [ ] Finalize the canonical benchmark instructions + prompt (multi-part narrative + JSON + SwiftUI pseudocode) and document rationale.
 
 ## BenchmarkCore Package
-- [ ] Scaffold a Swift package (`BenchmarkCore`) inside the repo and expose it to all app targets.
+- [x] Scaffold a Swift package (`BenchmarkCore`) inside the repo and expose it to all app targets.
 - [ ] Port token-counting helpers from `Developer/Apps/Foundation-Models-Framework-Example/Foundation Lab/Extensions/Transcript+TokenCounting.swift` and adapt them for headless use.
 - [ ] Implement `BenchmarkPrompt` (instructions, user prompt, optional variants) seeded from `DefaultPrompts`.
 - [ ] Build `BenchmarkRunner` that wraps `LanguageModelSession`, streams responses, records TTFT/total duration, counts tokens, and calculates tokens-per-second.
