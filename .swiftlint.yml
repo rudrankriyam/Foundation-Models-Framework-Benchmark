@@ -1,0 +1,7 @@
+included:
+  - BenchmarkCore/Sources
+  - FoundationStudio/FoundationStudio
+
+excluded:
+  - build
+  - .build
