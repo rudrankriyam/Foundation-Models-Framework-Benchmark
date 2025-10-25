@@ -24,13 +24,9 @@ public extension BenchmarkPrompt {
         We are designing "Waypoint", a cross-platform productivity companion that runs on Mac, iPad, iPhone,
         and Vision Pro.
         In a single response, please:
-        1. Summarize the product vision in 2 tight paragraphs.
-        2. Provide a Markdown table with at least 5 features, including platform-specific affordances.
-        3. Describe three target personas and three launches risks directly in prose (no JSON).
-        4. Finish with annotated SwiftUI pseudocode (wrapped in ```swift) for a cross-platform dashboard view
-        that highlights
-        one shared component and one visionOS-only component.
-        Favor deterministic, grounded language and keep the entire answer under 1000 words.
+        1. Summarize the product vision in exactly 5 tight paragraphs.
+        2. Provide exactly 10 features in detail, including platform-specific affordances.
+        3. Describe exactly 5 target personas and 5 launches risks directly in prose.
         """
     )
 }

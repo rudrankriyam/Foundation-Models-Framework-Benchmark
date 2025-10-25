@@ -125,13 +125,10 @@ struct ContentView: View {
                     .font(.callout)
                     .foregroundStyle(.secondary)
             } else {
-                ScrollView {
-                    Text(viewModel.streamingPreview)
-                        .font(.system(.body, design: .monospaced))
-                        .textSelection(.enabled)
-                        .frame(maxWidth: .infinity, alignment: .leading)
-                }
-                .frame(maxHeight: 220)
+                Text(viewModel.streamingPreview)
+                    .font(.system(.body, design: .monospaced))
+                    .textSelection(.enabled)
+                    .frame(maxWidth: .infinity, alignment: .leading)
             }
         }
     }

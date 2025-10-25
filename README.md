@@ -13,6 +13,12 @@ Open the project in Xcode and select the appropriate destination in the run dest
 
 Launch `FoundationStudio.app`, and ensure Apple Intelligence is available. Then tap **Run Benchmark**. Once complete, use the export buttons to save or share the report.
 
+## Sample Hardware Snapshot
+
+| Device | CPU | GPU | RAM | OS | Input | Output | Total | Duration | Tokens/sec |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| MacBook Air 15" (2024) | Apple M4 10‑core (4P + 6E) | Apple M4 10‑core (Metal 4) | 24 GB | macOS 26.1 | 144 | 887 | 1,031 | 15.23s | **58.24/s** |
+
 ## License
 
 This project is licensed under the MIT License - see the [LICENSE](LICENSE) file for details.

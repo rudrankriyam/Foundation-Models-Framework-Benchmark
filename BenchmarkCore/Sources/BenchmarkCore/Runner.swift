@@ -33,8 +33,7 @@ public actor BenchmarkRunner {
 
     public static let defaultGenerationOptions = GenerationOptions(
         sampling: .greedy,
-        temperature: 0.1,
-        maximumResponseTokens: 1200
+        temperature: 0.1
     )
 
     private let configuration: Configuration
