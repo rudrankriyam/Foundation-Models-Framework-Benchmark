@@ -2,15 +2,15 @@
 
 ## Shared Groundwork
 - [ ] Define benchmarking goals, success metrics, and submission flow (reference `Samples/XcodeBenchmark/ReadMe.md` for structure).
-- [ ] Enumerate required environment data (device name, chip, RAM, OS, Xcode, Apple Intelligence availability) and create a shared `EnvironmentSnapshot` model.
-- [ ] Finalize the canonical benchmark instructions + prompt (multi-part narrative + JSON + SwiftUI pseudocode) and document rationale.
+- [x] Enumerate required environment data (device name, chip, RAM, OS, Xcode, Apple Intelligence availability) and create a shared `EnvironmentSnapshot` model.
+- [x] Finalize the canonical benchmark instructions + prompt (multi-part narrative + JSON + SwiftUI pseudocode) and document rationale.
 
 ## BenchmarkCore Package
 - [x] Scaffold a Swift package (`BenchmarkCore`) inside the repo and expose it to all app targets.
-- [ ] Port token-counting helpers from `Developer/Apps/Foundation-Models-Framework-Example/Foundation Lab/Extensions/Transcript+TokenCounting.swift` and adapt them for headless use.
-- [ ] Implement `BenchmarkPrompt` (instructions, user prompt, optional variants) seeded from `DefaultPrompts`.
-- [ ] Build `BenchmarkRunner` that wraps `LanguageModelSession`, streams responses, records TTFT/total duration, counts tokens, and calculates tokens-per-second.
-- [ ] Add `BenchmarkReport` capable of serializing run metadata + metrics to JSON/Markdown.
+- [x] Port token-counting helpers from `Developer/Apps/Foundation-Models-Framework-Example/Foundation Lab/Extensions/Transcript+TokenCounting.swift` and adapt them for headless use.
+- [x] Implement `BenchmarkPrompt` (instructions, user prompt, optional variants) seeded from `DefaultPrompts`.
+- [x] Build `BenchmarkRunner` that wraps `LanguageModelSession`, streams responses, records TTFT/total duration, counts tokens, and calculates tokens-per-second.
+- [x] Add `BenchmarkReport` capable of serializing run metadata + metrics to JSON/Markdown.
 
 ## macOS Benchmark App
 - [ ] Create a SwiftUI macOS app target that links `BenchmarkCore`.
