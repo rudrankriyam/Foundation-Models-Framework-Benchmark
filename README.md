@@ -25,6 +25,7 @@ Launch `FoundationStudio.app`, and ensure Apple Intelligence is available. Then 
 | Device | CPU | GPU | RAM | OS | Input Tokens | Output Tokens | Total Tokens | Duration | Tokens/sec |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | iPhone 16 Pro | Apple A18 Pro 6‑core | Apple A18 Pro 6‑core | 8 GB | iOS 26.0 | TBD | TBD | TBD | TBD | TBD |
+| iPhone 16 Pro Max | Apple A18 Pro 6‑core | Apple A18 Pro 6‑core | 8 GB | iOS 26.1 | 125 | 1,069 | 1,194 | 21.07s | **56.67** |
 
 ## iPadOS
 
