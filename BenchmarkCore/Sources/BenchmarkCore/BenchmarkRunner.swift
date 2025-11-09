@@ -1,24 +1,30 @@
 import Foundation
 import FoundationModels
 
-// MARK: - Runner
+// MARK: - Benchmark Runner
 
+/// Executes benchmarks against the Foundation Models framework.
+///
+/// `BenchmarkRunner` is an actor that runs benchmarks by sending prompts to the
+/// system language model and measuring performance metrics including token counts,
+/// duration, and throughput.
+///
+/// ## Example
+///
+/// ```swift
+/// let runner = BenchmarkRunner()
+/// let result = try await runner.run { partialText in
+///     print("Streaming: \(partialText)")
+/// }
+/// print("Tokens/sec: \(result.metrics.tokensPerSecond ?? 0)")
+/// ```
 public actor BenchmarkRunner {
-    public struct Configuration: Sendable {
-        public let prompt: BenchmarkPrompt
-        public let options: GenerationOptions
-
-        public init(
-            prompt: BenchmarkPrompt = .productDesign,
-            options: GenerationOptions = BenchmarkRunner.defaultGenerationOptions
-        ) {
-            self.prompt = prompt
-            self.options = options
-        }
-    }
-
+    /// Errors that can occur when running a benchmark.
     public enum Error: Swift.Error, LocalizedError, Sendable {
+        /// The system language model is unavailable for the specified reason.
         case modelUnavailable(SystemLanguageModel.Availability.UnavailableReason)
+
+        /// The model returned an empty response.
         case emptyResponse
 
         public var errorDescription: String? {
@@ -31,17 +37,38 @@ public actor BenchmarkRunner {
         }
     }
 
+    /// Default generation options used for benchmarks.
+    ///
+    /// These options use greedy sampling with a low temperature (0.1) to ensure
+    /// consistent, deterministic results suitable for benchmarking.
     public static let defaultGenerationOptions = GenerationOptions(
         sampling: .greedy,
         temperature: 0.1
     )
 
-    private let configuration: Configuration
+    private let configuration: BenchmarkRunnerConfiguration
 
-    public init(configuration: Configuration = .init()) {
+    /// Creates a new benchmark runner with the specified configuration.
+    ///
+    /// - Parameter configuration: The configuration to use for running benchmarks.
+    ///   Defaults to a configuration with `.productDesign` prompt and default
+    ///   generation options.
+    public init(configuration: BenchmarkRunnerConfiguration = .init()) {
         self.configuration = configuration
     }
 
+    /// Runs a benchmark with the configured prompt and options.
+    ///
+    /// This method streams the model's response and measures performance metrics
+    /// including time to first token, total duration, and token counts.
+    ///
+    /// - Parameter onPartial: An optional closure that's called with partial text
+    ///   as the model generates its response. This allows for real-time display
+    ///   of the streaming output.
+    /// - Returns: A `BenchmarkResult` containing the metrics, environment information,
+    ///   and the complete response text.
+    /// - Throws: `BenchmarkRunner.Error` if the model is unavailable or returns
+    ///   an empty response.
     public func run(onPartial: (@Sendable (String) async -> Void)? = nil) async throws -> BenchmarkResult {
         try ensureModelAvailability()
 

@@ -72,7 +72,7 @@ final class BenchmarkViewModel {
 
         appendStatus("Run #\(runCount) started.")
 
-        let configuration = BenchmarkRunner.Configuration(
+        let configuration = BenchmarkRunnerConfiguration(
             prompt: prompt,
             options: generationOptions
         )

@@ -38,7 +38,7 @@ public struct EnvironmentSnapshot: Codable, Sendable {
         let versionString = "\(osVersion.majorVersion).\(osVersion.minorVersion).\(osVersion.patchVersion)"
         let localeIdentifier = Locale.current.identifier
         let deviceName = processInfo.hostName
-        
+
         let hardwareModel = processInfo.environment["SIMULATOR_MODEL_IDENTIFIER"]
 
         #if os(macOS)
