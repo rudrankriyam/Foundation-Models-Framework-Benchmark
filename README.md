@@ -1,4 +1,4 @@
-# Foundation Models Framework Benchmark
+# Foundation Models Framework Benchmark (WORK IN PROGRESS)
 
 This repo measures Foundation Models performance across macOS, iOS, iPadOS, and visionOS using the Foundation Models framework.
 
