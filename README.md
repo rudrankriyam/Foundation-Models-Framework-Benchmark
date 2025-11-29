@@ -18,6 +18,7 @@ Launch `FoundationStudio.app`, and ensure Apple Intelligence is available. Then 
 | Device | CPU | GPU | RAM | OS | Input Tokens | Output Tokens | Total Tokens | Duration | Tokens/sec |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | MacBook Pro 14" (2025) | Apple M5 10‑core | Apple M5 10‑core | 32 GB | macOS 26.0 | 125 | 1,069 | 1,194 | 14.41s | **82.86** |
+| MacBook Pro 14" (2024) | Apple M4 10‑core | Apple M4 10‑core | 16 GB | macOS 26.1 | 125 | 1,069 | 1,194 | 15.64s | **76.33** |
 | MacBook Air 15" (2025) | Apple M4 10‑core | Apple M4 10‑core | 24 GB | macOS 26.1 | 144 | 887 | 1,031 | 15.23s | **58.24** |
 
 ## iOS
