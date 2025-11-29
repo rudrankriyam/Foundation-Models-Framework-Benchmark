@@ -17,16 +17,15 @@ Launch `FoundationStudio.app`, and ensure Apple Intelligence is available. Then 
 
 | Device | CPU | GPU | RAM | OS | Input Tokens | Output Tokens | Total Tokens | Duration | Tokens/sec |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| MacBook Pro 14" (2025) | Apple M5 10‑core | Apple M5 10‑core | 24 GB | macOS 26.0 | 125 | 1,069 | 1,194 | 14.41s | **82.86** |
+| MacBook Pro 14" (2025) | Apple M5 10‑core | Apple M5 10‑core | 32 GB | macOS 26.0 | 125 | 1,069 | 1,194 | 14.41s | **82.86** |
 | MacBook Air 15" (2025) | Apple M4 10‑core | Apple M4 10‑core | 24 GB | macOS 26.1 | 144 | 887 | 1,031 | 15.23s | **58.24** |
 
 ## iOS
 
 | Device | CPU | GPU | RAM | OS | Input Tokens | Output Tokens | Total Tokens | Duration | Tokens/sec |
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
-| iPhone 16 Pro | Apple A18 Pro 6‑core | Apple A18 Pro 6‑core | 8 GB | iOS 26.0 | TBD | TBD | TBD | TBD | TBD |
-| iPhone 16 Pro Max | Apple A18 Pro 6‑core | Apple A18 Pro 6‑core | 8 GB | iOS 26.1 | 125 | 1,069 | 1,194 | 21.07s | **56.67** |
-| iPhone 17 Pro | Apple A19 Pro 6‑core | Apple A19 Pro 6‑core | 8 GB | iOS 26.1 | 125 | 1,069 | 1,194 | 11.93s | **100.08** |
+| iPhone 17 Pro | Apple A19 Pro 6‑core | Apple A19 Pro 6‑core | 12 GB | iOS 26.1 | 125 | 1,069 | 1,194 | 11.93s | **100.08** |
+| iPhone 16 Pro Max | Apple A18 Pro 6‑core | Apple A18 Pro 6‑core | 8 GB | iOS 26.2 | 125 | 1,069 | 1,194 | 17.53s | **68.13** |
 
 ## iPadOS
 
