@@ -26,6 +26,7 @@ Launch `FoundationStudio.app`, and ensure Apple Intelligence is available. Then 
 | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
 | iPhone 16 Pro | Apple A18 Pro 6‑core | Apple A18 Pro 6‑core | 8 GB | iOS 26.0 | TBD | TBD | TBD | TBD | TBD |
 | iPhone 16 Pro Max | Apple A18 Pro 6‑core | Apple A18 Pro 6‑core | 8 GB | iOS 26.1 | 125 | 1,069 | 1,194 | 21.07s | **56.67** |
+| iPhone 17 Pro | Apple A19 Pro 6‑core | Apple A19 Pro 6‑core | 8 GB | iOS 26.1 | 125 | 1,069 | 1,194 | 11.93s | **100.08** |
 
 ## iPadOS
 
