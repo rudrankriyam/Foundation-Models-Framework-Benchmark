@@ -58,24 +58,21 @@ extension Transcript.Segment {
     /// Estimates tokens for INPUT text (instructions/prompts) using a more conservative ratio
     /// Based on xctrace data: actual 235 vs estimated 228 (very accurate with 4.5 ratio)
     fileprivate var estimatedInputTokenCount: Int {
-        switch self {
-        case .text(let textSegment):
-            return estimateInputTokens(textSegment.content)
-        case .structure(let structuredSegment):
-            return estimateInputTokens(structuredSegment.content.jsonString)
-        @unknown default:
-            return 0
-        }
+        return estimateTokensWithFunction(estimateInputTokens)
     }
 
     /// Estimates tokens for OUTPUT text (responses) using a more generous ratio
     /// Based on xctrace data: shows ~6.0 chars/token for responses
     fileprivate var estimatedOutputTokenCount: Int {
+        return estimateTokensWithFunction(estimateOutputTokens)
+    }
+
+    private func estimateTokensWithFunction(_ estimator: (String) -> Int) -> Int {
         switch self {
         case .text(let textSegment):
-            return estimateOutputTokens(textSegment.content)
+            return estimator(textSegment.content)
         case .structure(let structuredSegment):
-            return estimateOutputTokens(structuredSegment.content.jsonString)
+            return estimator(structuredSegment.content.jsonString)
         @unknown default:
             return 0
         }
