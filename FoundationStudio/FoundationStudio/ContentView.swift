@@ -19,9 +19,7 @@ struct ContentView: View {
                     executionSection
                     if let result = viewModel.result {
                         metricsSection(for: result)
-                        exportSection
                     }
-                    logSection
                 }
                 .padding()
             }
@@ -47,16 +45,28 @@ struct ContentView: View {
 
     private var executionSection: some View {
         sectionCard(title: "Execution") {
-            Button(action: viewModel.runBenchmark) {
-                Label(viewModel.isRunning ? "Benchmark Running…" : "Run Benchmark",
-                      systemImage: viewModel.isRunning ? "hourglass" : "play.circle.fill")
-                .font(.headline)
-                .frame(maxWidth: .infinity)
+            HStack {
+                Button(action: viewModel.runBenchmark) {
+                    Label(viewModel.isRunning ? "Benchmark Running…" : "Run",
+                          systemImage: viewModel.isRunning ? "hourglass" : "play.circle.fill")
+                    .font(.headline)
+                    .frame(maxWidth: .infinity)
+                }
+                .tint(.indigo)
+                .controlSize(.large)
+                .buttonStyle(.borderedProminent)
+                .disabled(viewModel.isRunning)
+
+                if viewModel.result != nil {
+                    Button {
+                        viewModel.copyMarkdownToClipboard()
+                    } label: {
+                        Label("Copy", systemImage: "doc.on.doc")
+                    }
+                    .buttonStyle(.bordered)
+                    .controlSize(.large)
+                }
             }
-            .tint(.indigo)
-            .controlSize(.large)
-            .buttonStyle(.borderedProminent)
-            .disabled(viewModel.isRunning)
 
             if let error = viewModel.errorMessage {
                 Text(error)
@@ -112,83 +122,6 @@ struct ContentView: View {
             Spacer()
             Text(value)
                 .bold()
-        }
-    }
-
-    private var exportSection: some View {
-        sectionCard(title: "Export & Share") {
-            VStack(spacing: 12) {
-                HStack {
-                    Button {
-                        viewModel.copyMarkdownToClipboard()
-                    } label: {
-                        Label("Copy Markdown", systemImage: "doc.on.doc")
-                    }
-                    .buttonStyle(.bordered)
-
-                    Button {
-                        trySaveReport(format: .json(prettyPrinted: true))
-                    } label: {
-                        Label("Save JSON", systemImage: "square.and.arrow.down")
-                    }
-                    .buttonStyle(.bordered)
-                }
-
-                HStack {
-                    Button {
-                        trySaveReport(format: .markdown)
-                    } label: {
-                        Label("Save Markdown", systemImage: "square.and.arrow.down.on.square")
-                    }
-                    .buttonStyle(.bordered)
-
-                    if let url = viewModel.lastSavedURL {
-                        ShareLink(item: url) {
-                            Label("Share Last Export", systemImage: "square.and.arrow.up")
-                        }
-                        .buttonStyle(.borderedProminent)
-                    } else if let summary = viewModel.exportMarkdown() {
-                        ShareLink(item: summary) {
-                            Label("Share Summary", systemImage: "square.and.arrow.up")
-                        }
-                        .buttonStyle(.borderedProminent)
-                    }
-                }
-            }
-        }
-    }
-
-    private var logSection: some View {
-        sectionCard(title: "Status Log") {
-            if viewModel.statusMessages.isEmpty {
-                Text("No activity yet.")
-                    .font(.callout)
-                    .foregroundStyle(.secondary)
-            } else {
-                VStack(alignment: .leading, spacing: 8) {
-                    ForEach(viewModel.statusMessages) { message in
-                        HStack(alignment: .top, spacing: 8) {
-                            Text(message.formattedTimestamp)
-                                .font(.caption)
-                                .foregroundStyle(.secondary)
-                                .frame(width: 110, alignment: .leading)
-                            Text(message.text)
-                                .font(.body)
-                                .frame(maxWidth: .infinity, alignment: .leading)
-                        }
-                        .padding(.vertical, 4)
-                        .background(Color.secondary.opacity(0.08), in: RoundedRectangle(cornerRadius: 8))
-                    }
-                }
-            }
-        }
-    }
-
-    private func trySaveReport(format: BenchmarkViewModel.ExportFormat) {
-        do {
-            _ = try viewModel.saveReport(to: format)
-        } catch {
-            viewModel.errorMessage = error.localizedDescription
         }
     }
 
