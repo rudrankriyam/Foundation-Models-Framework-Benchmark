@@ -15,7 +15,6 @@ struct ContentView: View {
         NavigationStack {
             ScrollView {
                 VStack(alignment: .leading, spacing: 24) {
-                    promptSection
                     executionSection
                     if let result = viewModel.result {
                         metricsSection(for: result)
@@ -24,22 +23,6 @@ struct ContentView: View {
                 .padding()
             }
             .navigationTitle("Foundation Benchmark")
-        }
-    }
-
-    private var promptSection: some View {
-        sectionCard(title: "Benchmark Prompt") {
-            Text("Instructions")
-                .font(.headline)
-            Text(viewModel.prompt.instructions)
-                .font(.body)
-
-            Divider()
-
-            Text("User Prompt")
-                .font(.headline)
-            Text(viewModel.prompt.userPrompt)
-                .font(.body)
         }
     }
 
