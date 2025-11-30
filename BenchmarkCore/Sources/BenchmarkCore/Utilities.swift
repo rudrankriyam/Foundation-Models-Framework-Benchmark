@@ -62,7 +62,7 @@ extension Transcript.Segment {
         case .text(let textSegment):
             return estimateInputTokens(textSegment.content)
         case .structure(let structuredSegment):
-            return estimateTokens(for: structuredSegment.content)
+            return estimateInputTokens(structuredSegment.content.jsonString)
         @unknown default:
             return 0
         }
@@ -75,7 +75,7 @@ extension Transcript.Segment {
         case .text(let textSegment):
             return estimateOutputTokens(textSegment.content)
         case .structure(let structuredSegment):
-            return estimateTokens(for: structuredSegment.content)
+            return estimateOutputTokens(structuredSegment.content.jsonString)
         @unknown default:
             return 0
         }
@@ -104,13 +104,8 @@ private func estimateTokens(_ text: String) -> Int {
 private func estimateInputTokens(_ text: String) -> Int {
     guard !text.isEmpty else { return 0 }
 
-    // Dynamic calibration based on actual character count
-    // Reference: 1057 chars -> 235 tokens = 4.4938 chars/token
-    let referenceChars = 1057.0
-    let referenceTokens = 235.0
-    let ratio = referenceChars / referenceTokens
-
-    let tokensPerChar = 1.0 / ratio
+    // Direct ratio: 235 tokens / 1057 chars = 0.2223 tokens/char
+    let tokensPerChar = 235.0 / 1057.0
     return max(1, Int(ceil(Double(text.count) * tokensPerChar)))
 }
 
@@ -120,13 +115,8 @@ private func estimateInputTokens(_ text: String) -> Int {
 private func estimateOutputTokens(_ text: String) -> Int {
     guard !text.isEmpty else { return 0 }
 
-    // Dynamic calibration based on actual character count
-    // Reference: 13680 chars -> 2276 tokens = 6.0106 chars/token
-    let referenceChars = 13680.0
-    let referenceTokens = 2276.0
-    let ratio = referenceChars / referenceTokens
-
-    let tokensPerChar = 1.0 / ratio
+    // Direct ratio: 2276 tokens / 13680 chars = 0.1664 tokens/char
+    let tokensPerChar = 2276.0 / 13680.0
     return max(1, Int(ceil(Double(text.count) * tokensPerChar)))
 }
 
