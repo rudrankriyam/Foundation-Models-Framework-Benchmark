@@ -22,9 +22,6 @@ struct ContentView: View {
                         exportSection
                     }
                     logSection
-                    if viewModel.isRunning || !viewModel.streamingPreview.isEmpty {
-                        streamingSection
-                    }
                 }
                 .padding()
             }
@@ -60,11 +57,6 @@ struct ContentView: View {
             .controlSize(.large)
             .buttonStyle(.borderedProminent)
             .disabled(viewModel.isRunning)
-
-            if viewModel.isRunning {
-                ProgressView("Streaming response…")
-                    .progressViewStyle(.linear)
-            }
 
             if let error = viewModel.errorMessage {
                 Text(error)
@@ -120,21 +112,6 @@ struct ContentView: View {
             Spacer()
             Text(value)
                 .bold()
-        }
-    }
-
-    private var streamingSection: some View {
-        sectionCard(title: viewModel.isRunning ? "Streaming Output" : "Last Response") {
-            if viewModel.streamingPreview.isEmpty {
-                Text("Awaiting tokens…")
-                    .font(.callout)
-                    .foregroundStyle(.secondary)
-            } else {
-                Text(viewModel.streamingPreview)
-                    .font(.system(.body, design: .monospaced))
-                    .textSelection(.enabled)
-                    .frame(maxWidth: .infinity, alignment: .leading)
-            }
         }
     }
 

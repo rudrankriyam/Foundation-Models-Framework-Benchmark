@@ -59,17 +59,14 @@ public actor BenchmarkRunner {
 
     /// Runs a benchmark with the configured prompt and options.
     ///
-    /// This method streams the model's response and measures performance metrics
-    /// including time to first token, total duration, and token counts.
+    /// This method measures performance metrics including time to first token,
+    /// total duration, and token counts.
     ///
-    /// - Parameter onPartial: An optional closure that's called with partial text
-    ///   as the model generates its response. This allows for real-time display
-    ///   of the streaming output.
     /// - Returns: A `BenchmarkResult` containing the metrics, environment information,
     ///   and the complete response text.
     /// - Throws: `BenchmarkRunner.Error` if the model is unavailable or returns
     ///   an empty response.
-    public func run(onPartial: (@Sendable (String) async -> Void)? = nil) async throws -> BenchmarkResult {
+    public func run() async throws -> BenchmarkResult {
         try ensureModelAvailability()
 
         let session = LanguageModelSession(
@@ -90,9 +87,6 @@ public actor BenchmarkRunner {
                 firstTokenDate = Date()
             }
             responseText = renderPartialText(from: snapshot)
-            if let onPartial {
-                await onPartial(responseText)
-            }
         }
 
         guard !responseText.trimmingCharacters(in: .whitespacesAndNewlines).isEmpty else {

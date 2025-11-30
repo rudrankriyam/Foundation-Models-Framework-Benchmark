@@ -38,20 +38,20 @@ public struct BenchmarkPrompt: Hashable, Codable, Sendable {
 }
 
 public extension BenchmarkPrompt {
-    /// Canonical prompt designed to stress narrative, structured JSON, and SwiftUI reasoning.
+    /// Canonical prompt designed to stress throughput with maximum token output.
     static let productDesign: BenchmarkPrompt = .init(
-        instructions: """
-        You are a senior product architect helping a multidisciplinary team evaluate a next-generation
-        productivity companion.
-        You think aloud, justify tradeoffs, and keep responses professional.
-        """,
+        instructions: "You are a helpful assistant. Write detailed, thorough responses.",
         userPrompt: """
-        We are designing "Waypoint", a cross-platform productivity companion that runs on Mac, iPad, iPhone,
-        and Vision Pro.
-        In a single response, please:
-        1. Summarize the product vision in exactly 5 tight paragraphs.
-        2. Provide exactly 10 features in detail, including platform-specific affordances.
-        3. Describe exactly 5 target personas and 5 launches risks directly in prose.
+        Describe the benefits of morning routines for productivity.
+
+        Write 25 detailed paragraphs covering:
+        - Why morning routines matter (5 paragraphs)
+        - Physical health benefits (5 paragraphs)
+        - Mental health benefits (5 paragraphs)
+        - Productivity benefits (5 paragraphs)
+        - How to build a morning routine (5 paragraphs)
+
+        Each paragraph should be 4-5 sentences long. Write in detail.
         """
     )
 }
