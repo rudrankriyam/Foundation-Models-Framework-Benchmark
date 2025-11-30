@@ -2,6 +2,17 @@ import Foundation
 
 // MARK: - XML Parsing for xctrace Foundation Models data
 
+// Helper function to print comparison between estimated and actual values
+private func printComparison(name: String, estimated: Int, actual: Int) {
+    print("\(name):")
+    print("  Estimated:  \(estimated)")
+    print("  Actual:     \(actual)")
+    let diff = actual - estimated
+    let percent = estimated > 0 ? Double(diff) / Double(estimated) * 100 : 0
+    print("  Difference: \(diff >= 0 ? "+" : "")\(diff) (\(String(format: "%.1f", percent))%)")
+    print("")
+}
+
 struct TokenRow {
     let promptTokens: String?
     let responseTokens: String?
@@ -126,39 +137,22 @@ func parseTokenExportXML(_ xmlPath: String) {
             print("COMPARISON (Estimated vs Actual):")
             print("=" + String(repeating: "=", count: 79))
             print("")
-            print("Prompt Tokens:")
-            print("  Estimated:  \(estPrompt)")
-            print("  Actual:     \(actualPrompt)")
-            let promptDiff = actualPrompt - estPrompt
-            let promptPercent = estPrompt > 0 ? Double(promptDiff) / Double(estPrompt) * 100 : 0
-            print("  Difference: \(promptDiff >= 0 ? "+" : "")\(promptDiff) (\(String(format: "%.1f", promptPercent))%)")
-            print("")
-            print("Response Tokens:")
-            print("  Estimated:  \(estResponse)")
-            print("  Actual:     \(actualResponse)")
-            let responseDiff = actualResponse - estResponse
-            let responsePercent = estResponse > 0 ? Double(responseDiff) / Double(estResponse) * 100 : 0
-            print("  Difference: \(responseDiff >= 0 ? "+" : "")\(responseDiff) (\(String(format: "%.1f", responsePercent))%)")
-            print("")
-            print("Total Tokens:")
-            print("  Estimated:  \(estTotal)")
-            print("  Actual:     \(actualTotal)")
-            let totalDiff = actualTotal - estTotal
-            let totalPercent = estTotal > 0 ? Double(totalDiff) / Double(estTotal) * 100 : 0
-            print("  Difference: \(totalDiff >= 0 ? "+" : "")\(totalDiff) (\(String(format: "%.1f", totalPercent))%)")
-            print("")
+
+            printComparison(name: "Prompt Tokens", estimated: estPrompt, actual: actualPrompt)
+            printComparison(name: "Response Tokens", estimated: estResponse, actual: actualResponse)
+            printComparison(name: "Total Tokens", estimated: estTotal, actual: actualTotal)
 
             print("Performance:")
             let actualTPS = Double(actualTotal) / duration
+            let estimatedTPS = result.metrics.tokensPerSecond ?? 0
             print("  Duration:              \(String(format: "%.2fs", duration))")
-            print("  Tokens/sec (est.):     \(String(format: "%.2f", result.metrics.tokensPerSecond ?? 0))")
+            print("  Tokens/sec (est.):     \(String(format: "%.2f", estimatedTPS))")
             print("  Tokens/sec (actual):   \(String(format: "%.2f", actualTPS))")
             print("")
 
             if actualTPS > 0 {
-                let tpsDiff = actualTPS - (result.metrics.tokensPerSecond ?? 0)
-                let tpsPercent = (result.metrics.tokensPerSecond ?? 0) > 0 ?
-                    tpsDiff / (result.metrics.tokensPerSecond ?? 1) * 100 : 0
+                let tpsDiff = actualTPS - estimatedTPS
+                let tpsPercent = estimatedTPS > 0 ? tpsDiff / estimatedTPS * 100 : 0
                 print("  TPS Difference:        \(tpsDiff >= 0 ? "+" : "")\(String(format: "%.2f", tpsDiff)) (\(String(format: "%.1f", tpsPercent))%)")
             }
 
