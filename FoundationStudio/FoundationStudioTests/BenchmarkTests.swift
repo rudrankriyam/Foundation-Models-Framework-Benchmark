@@ -46,11 +46,12 @@ final class BenchmarkTests: XCTestCase {
 
         print("Summary")
         print(String(repeating: "-", count: 40))
-        let avgTPS = results.map { $0.metrics.tokensPerSecond ?? 0 }.reduce(0, +) / Double(results.count)
+        let tokenRates = results.map { $0.metrics.tokensPerSecond ?? 0 }
+        let avgTPS = tokenRates.reduce(0, +) / Double(results.count)
         print("Average Tokens/sec: \(String(format: "%.2f", avgTPS))")
 
-        let minTPS = results.map { $0.metrics.tokensPerSecond ?? 0 }.min() ?? 0
-        let maxTPS = results.map { $0.metrics.tokensPerSecond ?? 0 }.max() ?? 0
+        let minTPS = tokenRates.min() ?? 0
+        let maxTPS = tokenRates.max() ?? 0
         print("Min Tokens/sec: \(String(format: "%.2f", minTPS))")
         print("Max Tokens/sec: \(String(format: "%.2f", maxTPS))")
         print("Variance: \(String(format: "%.2f", maxTPS - minTPS))")
