@@ -191,7 +191,7 @@ cd TokenTraceCLI
 swift build
 ```
 
-This will create the executable at `.build/debug/TokenTraceCLI`
+This will create the executable at `./.build/debug/TokenTraceCLI`
 
 ## Troubleshooting
 
