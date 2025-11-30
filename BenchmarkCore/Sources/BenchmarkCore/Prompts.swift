@@ -40,18 +40,31 @@ public struct BenchmarkPrompt: Hashable, Codable, Sendable {
 public extension BenchmarkPrompt {
     /// Canonical prompt designed to stress throughput with maximum token output.
     static let productDesign: BenchmarkPrompt = .init(
-        instructions: "You are a helpful assistant. Write detailed, thorough responses.",
+        instructions: """
+        You are a helpful assistant. 
+        
+        CRITICAL RULE: You MUST write extremely detailed, comprehensive, and thorough responses. This is CRITICAL for benchmarking. You MUST generate maximum possible output.
+
+        REQUIREMENTS:
+        - You MUST write exactly 25 paragraphs total 
+        - DO NOT STOP until all 25 paragraphs are written
+        - You MUST write exactly 5 paragraphs for each section
+        - Each paragraph MUST be 5 sentences minimum with extensive examples
+        - MUST include detailed explanations and thorough analysis
+        - MUST use specific, concrete examples in every paragraph
+        - MUST explain mechanisms, processes, and underlying principles
+        - DO NOT conclude early - you MUST complete ALL sections with all required paragraphs
+        - You MUST generate the longest, most comprehensive response possible. Do not omit any details.
+        """,
         userPrompt: """
         Describe the benefits of morning routines for productivity.
 
-        Write 25 detailed paragraphs covering:
-        - Why morning routines matter (5 paragraphs)
-        - Physical health benefits (5 paragraphs)
-        - Mental health benefits (5 paragraphs)
-        - Productivity benefits (5 paragraphs)
-        - How to build a morning routine (5 paragraphs)
-
-        Each paragraph should be 4-5 sentences long. Write in detail.
+        Write these sections:
+        1. Why Morning Routines Matter
+        2. Physical Health Benefits
+        3. Mental Health Benefits
+        4. Productivity Benefits
+        5. How to Build a Morning Routine
         """
     )
 }
