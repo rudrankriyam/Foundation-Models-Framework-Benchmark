@@ -3,9 +3,20 @@ import BenchmarkCore
 import FoundationModels
 
 @main
-struct TokenTraceCLI {
+struct BenchmarkCLI {
     static func main() async {
         let arguments = CommandLine.arguments
+
+        // Check for parse-xml command
+        if arguments.count > 1 && arguments[1] == "parse-xml" {
+            if arguments.count < 3 {
+                print("Usage: BenchmarkCLI parse-xml <export.xml>")
+                exit(1)
+            }
+            let xmlPath = arguments[2]
+            parseTokenExportXML(xmlPath)
+            return
+        }
 
         // Check if running with xctrace (will have "token-test" argument)
         let runWithXctrace = arguments.contains("token-test")
@@ -19,7 +30,7 @@ struct TokenTraceCLI {
 
     static func runNormalBenchmark() async {
         do {
-            print("TokenTraceCLI - Foundation Models Benchmark")
+            print("BenchmarkCLI - Foundation Models Benchmark")
             print(String(repeating: "=", count: 80))
             print("Using .productDesign prompt with greedy sampling (temp=0.1)")
             print()
@@ -47,7 +58,7 @@ struct TokenTraceCLI {
             print("To get ACTUAL token counts with xctrace:")
             print("   xctrace record --instrument 'Foundation Models' \\")
             print("     --output token-test.trace \\")
-            print("     --launch -- ./TokenTraceCLI -- token-test")
+            print("     --launch -- ./BenchmarkCLI -- token-test")
             print()
             print("   Then export:")
             print("   xctrace export \\")

@@ -84,7 +84,7 @@ final class BenchmarkTests: XCTestCase {
         XCTAssertGreaterThan(result.metrics.tokensPerSecond ?? 0, 5)
 
         print("Response Preview:")
-        print("-" * 40)
+        print(String(repeating: "-", count: 40))
         let preview = String(result.responseText.prefix(300))
         print(preview)
         print("...")
@@ -93,7 +93,7 @@ final class BenchmarkTests: XCTestCase {
 
     private func printBenchmarkResult(_ result: BenchmarkResult) {
         print("Environment")
-        print("-" * 40)
+        print(String(repeating: "-", count: 40))
         print("Device: \(result.environment.deviceName)")
         print("OS: \(result.environment.systemName) \(result.environment.systemVersion)")
         print("Locale: \(result.environment.localeIdentifier)")
@@ -101,7 +101,7 @@ final class BenchmarkTests: XCTestCase {
         print()
 
         print("Performance Metrics")
-        print("-" * 40)
+        print(String(repeating: "-", count: 40))
         print("Duration: \(String(format: "%.2fs", result.metrics.duration))")
         print("Time to First Token: \(result.metrics.timeToFirstToken.map { String(format: "%.2fs", $0) } ?? "n/a")")
         print("Prompt Tokens (est.): \(result.metrics.promptTokenEstimate)")
@@ -111,7 +111,7 @@ final class BenchmarkTests: XCTestCase {
         print()
 
         print("Response Preview")
-        print("-" * 40)
+        print(String(repeating: "-", count: 40))
         let preview = String(result.responseText.prefix(300))
         print(preview)
         print("...")

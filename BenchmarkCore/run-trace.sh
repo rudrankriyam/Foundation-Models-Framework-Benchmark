@@ -1,15 +1,15 @@
 #!/bin/bash
 
-# TokenTraceCLI - Automated xctrace workflow for Foundation Models benchmarking
+# BenchmarkCLI - Automated xctrace workflow for Foundation Models benchmarking
 # This script records a benchmark run with xctrace and exports the data
 
 set -e
 
 TRACE_FILE="token-test.trace"
 EXPORT_FILE="token-export.xml"
-CLI_PATH="./.build/debug/TokenTraceCLI"
+CLI_PATH="./.build/debug/BenchmarkCLI"
 
-echo "TokenTraceCLI - xctrace Foundation Models Workflow"
+echo "BenchmarkCLI - xctrace Foundation Models Workflow"
 echo "================================================================================"
 echo ""
 
@@ -63,15 +63,9 @@ echo ""
 echo "================================================================================"
 echo ""
 
-# Try to parse with Swift if parsexc.swift exists
-PARSE_SCRIPT="./parsexc.swift"
-if [ -f "$PARSE_SCRIPT" ]; then
-    echo "Parsing XML data..."
-    swift "$PARSE_SCRIPT" "$EXPORT_FILE"
-else
-    echo "To parse this XML, you can use the parsexc.swift helper script"
-    echo "   or manually inspect the token counts in the XML above."
-fi
+# Parse XML using BenchmarkCLI
+echo "Parsing XML data..."
+echo "(XML parsing is now integrated into BenchmarkCLI - run with: swift run BenchmarkCLI parse-xml $EXPORT_FILE)"
 
 echo ""
 echo "Done! Files created:"
