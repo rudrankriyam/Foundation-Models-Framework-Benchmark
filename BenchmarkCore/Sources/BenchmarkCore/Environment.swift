@@ -189,6 +189,7 @@ public struct EnvironmentSnapshot: Codable, Sendable {
     }
 
     /// Helper function to get Mac GPU model using system_profiler
+    #if os(macOS)
     private static func getMacGPUModel() -> String? {
         do {
             let task = Process()
@@ -216,4 +217,5 @@ public struct EnvironmentSnapshot: Codable, Sendable {
 
         return nil
     }
+    #endif
 }
