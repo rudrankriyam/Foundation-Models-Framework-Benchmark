@@ -13,7 +13,7 @@ This repo measures Foundation Models performance across macOS, iOS, iPadOS, and 
 
 1. Open the project in Xcode
 2. Select your target device (iPhone, iPad, Mac, or simulator) from the device dropdown
-3. Press **Cmd+U** to run all tests, or **Cmd+Shift+K** to run just the benchmark test
+3. Press **Cmd+U** to run all tests, or place cursor in test method and press **Control+Option+Command+U** to run a specific test
 
 ### Using Command Line
 

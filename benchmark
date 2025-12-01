@@ -28,20 +28,19 @@ fi
 
 # Build first
 echo "Building BenchmarkCLI ($CONFIGURATION)..."
-if ! cd "$PROJECT_DIR" && swift build -c "$CONFIGURATION" 2>&1 | tail -3; then
+cd "$PROJECT_DIR"
+if ! swift build -c "$CONFIGURATION"; then
 	echo "Build failed"
 	exit 1
 fi
 
-cd "$PROJECT_DIR"
-
 # Find the build directory
 BUILD_DIR=".build/$CONFIGURATION"
 
-if [ -f "$BUILD_DIR/benchmark" ]; then
+if [ -f "$BUILD_DIR/BenchmarkCLI" ]; then
 	export DYLD_FRAMEWORK_PATH="$BUILD_DIR/PackageFrameworks:$BUILD_DIR"
-	exec "$BUILD_DIR/benchmark" "$@"
+	exec "$BUILD_DIR/BenchmarkCLI" "$@"
 else
-	echo "Error: $BUILD_DIR/benchmark does not exist"
+	echo "Error: $BUILD_DIR/BenchmarkCLI does not exist"
 	exit 1
 fi

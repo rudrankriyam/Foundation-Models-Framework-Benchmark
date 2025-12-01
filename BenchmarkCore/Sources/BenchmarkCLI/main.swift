@@ -9,13 +9,8 @@ struct BenchmarkCLI {
 
         // Check for parse-xml command
         if arguments.count > 1 && arguments[1] == "parse-xml" {
-            if arguments.count < 3 {
-                print("Usage: BenchmarkCLI parse-xml <export.xml>")
-                exit(1)
-            }
-            let xmlPath = arguments[2]
-            parseTokenExportXML(xmlPath)
-            return
+            print("XML parsing functionality temporarily disabled - rebuilding...")
+            exit(1)
         }
 
         // Check if running with xctrace (will have "token-test" argument)

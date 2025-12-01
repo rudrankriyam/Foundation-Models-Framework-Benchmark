@@ -1,6 +1,12 @@
 import Foundation
 import FoundationModels
 
+// MARK: - Token Estimation Constants
+
+/// Calibration values for token estimation based on xctrace data
+private let inputTokenCalibration = (tokens: 235.0, characters: 1057.0)
+private let outputTokenCalibration = (tokens: 2276.0, characters: 13680.0)
+
 internal func renderPartialText(from snapshot: LanguageModelSession.ResponseStream<String>.Snapshot) -> String {
     if let value = try? snapshot.rawContent.value(String.self) {
         return value
@@ -29,12 +35,12 @@ extension Transcript.Entry {
         case .toolCalls(let toolCalls):
             return toolCalls.reduce(0) { total, call in
                 total
-                + estimateTokens(call.toolName)
+                + estimateInputTokens(call.toolName)
                 + estimateTokens(for: call.arguments)
                 + 5 // small fixed overhead
             }
         case .toolOutput(let output):
-            return output.segments.reduce(0) { $0 + $1.estimatedTokenCount } + 3
+            return output.segments.reduce(0) { $0 + $1.estimatedOutputTokenCount } + 3
         @unknown default:
             return 0
         }
@@ -47,6 +53,7 @@ extension Transcript.Segment {
         case .text(let textSegment):
             return estimateTokens(textSegment.content)
         case .structure(let structuredSegment):
+            // Use specific estimation for structured content
             return estimateTokens(for: structuredSegment.content)
         @unknown default:
             return 0
@@ -101,8 +108,8 @@ private func estimateTokens(_ text: String) -> Int {
 private func estimateInputTokens(_ text: String) -> Int {
     guard !text.isEmpty else { return 0 }
 
-    // Direct ratio: 235 tokens / 1057 chars = 0.2223 tokens/char
-    let tokensPerChar = 235.0 / 1057.0
+    // Use calibrated token-to-character ratio from xctrace data
+    let tokensPerChar = inputTokenCalibration.tokens / inputTokenCalibration.characters
     return max(1, Int(ceil(Double(text.count) * tokensPerChar)))
 }
 
@@ -112,8 +119,8 @@ private func estimateInputTokens(_ text: String) -> Int {
 private func estimateOutputTokens(_ text: String) -> Int {
     guard !text.isEmpty else { return 0 }
 
-    // Direct ratio: 2276 tokens / 13680 chars = 0.1664 tokens/char
-    let tokensPerChar = 2276.0 / 13680.0
+    // Use calibrated token-to-character ratio from xctrace data
+    let tokensPerChar = outputTokenCalibration.tokens / outputTokenCalibration.characters
     return max(1, Int(ceil(Double(text.count) * tokensPerChar)))
 }
 

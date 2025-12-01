@@ -20,7 +20,7 @@ In Xcode, use the device selector dropdown at the top to choose:
 
 ### 2. Run Tests
 Press **Cmd+U** to run all benchmark tests, or:
-- Press **Cmd+Shift+K** to run a specific test
+- Place cursor in test method and press **Control+Option+Command+U** to run a specific test
 - Use the test navigator to run individual tests
 
 ### 3. View Results
