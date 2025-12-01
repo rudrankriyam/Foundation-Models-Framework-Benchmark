@@ -89,13 +89,15 @@ struct BenchmarkCLI {
                     print("   Then export:")
                     print("   xctrace export \\")
                     print("     --input token-test.trace \\")
-                    print("     --xpath '/trace-toc/run[@number=\"1\"]/data/table[@schema=\"FoundationModelsTable\"]' \\")
+                    print("     --xpath '/trace-toc/run[@number=\"1\"]/data/table" +
+                          "[@schema=\"FoundationModelsTable\"]' \\")
                     print("     > token-export.xml")
                 } else {
                     print("To extract actual token data, export the trace:")
                     print("   xctrace export \\")
                     print("     --input token-test.trace \\")
-                    print("     --xpath '/trace-toc/run[@number=\"1\"]/data/table[@schema=\"FoundationModelsTable\"]' \\")
+                    print("     --xpath '/trace-toc/run[@number=\"1\"]/data/table" +
+                          "[@schema=\"FoundationModelsTable\"]' \\")
                     print("     > token-export.xml")
                 }
             }
@@ -153,4 +155,3 @@ struct BenchmarkCLI {
         print()
     }
 }
-

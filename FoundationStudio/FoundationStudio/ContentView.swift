@@ -54,9 +54,15 @@ struct ContentView: View {
                             .frame(maxWidth: .infinity, alignment: .leading)
 
                         VStack(alignment: .leading, spacing: 4) {
-                            TestRow(testName: "testProductDesignBenchmark", description: "Single benchmark run with .productDesign prompt")
+                            TestRow(
+                                testName: "testProductDesignBenchmark",
+                                description: "Single benchmark run with .productDesign prompt"
+                            )
                             TestRow(testName: "testMultipleBenchmarkRuns", description: "3 iterations with statistics")
-                            TestRow(testName: "testCustomPromptBenchmark", description: "Custom prompt with neural networks")
+                            TestRow(
+                                testName: "testCustomPromptBenchmark",
+                                description: "Custom prompt with neural networks"
+                            )
                         }
                         .padding()
                         .background(Color.secondary.opacity(0.08))

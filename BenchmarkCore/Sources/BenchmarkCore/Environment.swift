@@ -114,53 +114,26 @@ public struct EnvironmentSnapshot: Codable, Sendable {
 
         #if os(macOS)
         let systemName = "macOS"
-
-        // Gather hardware information for macOS
-        var cpuModel: String? = nil
-        var cpuCores: Int? = nil
-        var gpuModel: String? = nil
-        var totalMemory: UInt64? = nil
-
-        // Get CPU information
-        var size = 0
-        sysctlbyname("machdep.cpu.brand_string", nil, &size, nil, 0)
-        if size > 0 {
-            var cpuBrand = [CChar](repeating: 0, count: size)
-            sysctlbyname("machdep.cpu.brand_string", &cpuBrand, &size, nil, 0)
-            cpuModel = String(cString: cpuBrand)
-        }
-
-        // Get CPU core count
-        var ncpu: Int32 = 0
-        size = MemoryLayout<Int32>.size
-        if sysctlbyname("hw.ncpu", &ncpu, &size, nil, 0) == 0 {
-            cpuCores = Int(ncpu)
-        }
-
-        // Get total memory
+        let (cpuModel, cpuCores) = gatherMacOSHardwareInfo()
+        let gpuModel = getMacGPUModelImpl()
+        var totalMemory: UInt64?
         var memsize: UInt64 = 0
-        size = MemoryLayout<UInt64>.size
+        var size = MemoryLayout<UInt64>.size
         if sysctlbyname("hw.memsize", &memsize, &size, nil, 0) == 0 {
             totalMemory = memsize
         }
-
-        // Get GPU/chip information using system_profiler
-        gpuModel = getMacGPUModel()
-
         #elseif os(iOS)
         let systemName = "iOS"
         let cpuModel = processInfo.processorCount > 0 ? "Apple A-series" : nil
         let cpuCores = processInfo.processorCount
         let gpuModel = "Apple GPU"
         let totalMemory = processInfo.physicalMemory
-
         #elseif os(visionOS)
         let systemName = "visionOS"
         let cpuModel = processInfo.processorCount > 0 ? "Apple R-series" : nil
         let cpuCores = processInfo.processorCount
         let gpuModel = "Apple GPU"
         let totalMemory = processInfo.physicalMemory
-
         #else
         let systemName = processInfo.operatingSystemVersionString
         let cpuModel: String? = nil
@@ -169,8 +142,7 @@ public struct EnvironmentSnapshot: Codable, Sendable {
         let totalMemory: UInt64? = nil
         #endif
 
-        let shortVersion = bundle.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
-        let buildNumber = bundle.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String
+        let (shortVersion, buildNumber) = bundleMetadata(bundle: bundle)
 
         return EnvironmentSnapshot(
             deviceName: deviceName,
@@ -188,9 +160,41 @@ public struct EnvironmentSnapshot: Codable, Sendable {
         )
     }
 
+    /// Extracts metadata from a bundle
+    private static func bundleMetadata(bundle: Bundle) -> (String?, String?) {
+        let shortVersion = bundle.object(forInfoDictionaryKey: "CFBundleShortVersionString") as? String
+        let buildNumber = bundle.object(forInfoDictionaryKey: kCFBundleVersionKey as String) as? String
+        return (shortVersion, buildNumber)
+    }
+
+    #if os(macOS)
+    /// Gathers hardware information for macOS systems
+    private static func gatherMacOSHardwareInfo() -> (String?, Int?) {
+        // Get CPU information
+        var cpuModel: String?
+        var size = 0
+        sysctlbyname("machdep.cpu.brand_string", nil, &size, nil, 0)
+        if size > 0 {
+            var cpuBrand = [CChar](repeating: 0, count: size)
+            sysctlbyname("machdep.cpu.brand_string", &cpuBrand, &size, nil, 0)
+            cpuModel = String(cString: cpuBrand)
+        }
+
+        // Get CPU core count
+        var cpuCores: Int?
+        var ncpu: Int32 = 0
+        size = MemoryLayout<Int32>.size
+        if sysctlbyname("hw.ncpu", &ncpu, &size, nil, 0) == 0 {
+            cpuCores = Int(ncpu)
+        }
+
+        return (cpuModel, cpuCores)
+    }
+    #endif
+
     /// Helper function to get Mac GPU model using system_profiler
     #if os(macOS)
-    private static func getMacGPUModel() -> String? {
+    private static func getMacGPUModelImpl() -> String? {
         do {
             let task = Process()
             task.executableURL = URL(fileURLWithPath: "/usr/bin/system_profiler")
