@@ -2,17 +2,6 @@ import Foundation
 
 // MARK: - XML Parsing for xctrace Foundation Models data
 
-// Helper function to print comparison between estimated and actual values
-private func printComparison(name: String, estimated: Int, actual: Int) {
-    print("\(name):")
-    print("  Estimated:  \(estimated)")
-    print("  Actual:     \(actual)")
-    let diff = actual - estimated
-    let percent = estimated > 0 ? Double(diff) / Double(estimated) * 100 : 0
-    print("  Difference: \(diff >= 0 ? "+" : "")\(diff) (\(String(format: "%.1f", percent))%)")
-    print("")
-}
-
 struct TokenRow {
     let promptTokens: String?
     let responseTokens: String?
@@ -88,7 +77,17 @@ final class TokenXMLParser: NSObject, XMLParserDelegate {
 
 // MARK: - CLI Helper Functions
 
-func parseTokenExportXML(_ xmlPath: String) {
+private func printComparison(name: String, estimated: Int, actual: Int) {
+    print("\(name):")
+    print("  Estimated:  \(estimated)")
+    print("  Actual:     \(actual)")
+    let diff = actual - estimated
+    let percent = estimated > 0 ? Double(diff) / Double(estimated) * 100 : 0
+    print("  Difference: \(diff >= 0 ? "+" : "")\(diff) (\(String(format: "%.1f", percent))%)")
+    print("")
+}
+
+public func parseTokenExportXML(_ xmlPath: String) {
     do {
         let parser = TokenXMLParser()
         let table = try parser.parseXML(at: xmlPath)
@@ -160,8 +159,12 @@ func parseTokenExportXML(_ xmlPath: String) {
             print("=" + String(repeating: "=", count: 79))
             print("Comparison complete!")
 
-            // Accuracy assessment
+            // Calculate total percent difference for accuracy assessment
+            let promptPercent = estPrompt > 0 ? Double(actualPrompt - estPrompt) / Double(estPrompt) * 100 : 0
+            let responsePercent = estResponse > 0 ? Double(actualResponse - estResponse) / Double(estResponse) * 100 : 0
+            let totalPercent = (abs(promptPercent) + abs(responsePercent)) / 2.0
             let accuracy = 100.0 - abs(totalPercent)
+
             print("")
             if accuracy >= 95 {
                 print("Excellent! Estimation is within 5% of actual token count.")

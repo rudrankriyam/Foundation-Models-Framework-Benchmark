@@ -26,23 +26,6 @@
 		8F9333AD2EDC957C001D8D8F /* FoundationStudioTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = FoundationStudioTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 /* End PBXFileReference section */
 
-/* Begin PBXFileSystemSynchronizedBuildFileExceptionSet section */
-		8F9333BC2EDC9582001D8D8F /* Exceptions for "FoundationStudioTests" folder in "FoundationStudio" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				BenchmarkTests.swift,
-			);
-			target = 0A2230CF2EACD0FC00E09810 /* FoundationStudio */;
-		};
-		8F9333BD2EDC9582001D8D8F /* Exceptions for "FoundationStudioTests" folder in "FoundationStudioTests" target */ = {
-			isa = PBXFileSystemSynchronizedBuildFileExceptionSet;
-			membershipExceptions = (
-				BenchmarkTests.swift,
-			);
-			target = 8F9333AC2EDC957C001D8D8F /* FoundationStudioTests */;
-		};
-/* End PBXFileSystemSynchronizedBuildFileExceptionSet section */
-
 /* Begin PBXFileSystemSynchronizedRootGroup section */
 		0A2230D22EACD0FC00E09810 /* FoundationStudio */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
@@ -51,10 +34,6 @@
 		};
 		8F9333AE2EDC957C001D8D8F /* FoundationStudioTests */ = {
 			isa = PBXFileSystemSynchronizedRootGroup;
-			exceptions = (
-				8F9333BC2EDC9582001D8D8F /* Exceptions for "FoundationStudioTests" folder in "FoundationStudio" target */,
-				8F9333BD2EDC9582001D8D8F /* Exceptions for "FoundationStudioTests" folder in "FoundationStudioTests" target */,
-			);
 			path = FoundationStudioTests;
 			sourceTree = "<group>";
 		};

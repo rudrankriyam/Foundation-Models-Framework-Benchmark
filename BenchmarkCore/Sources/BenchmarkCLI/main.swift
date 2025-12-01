@@ -31,10 +31,8 @@ struct BenchmarkCLI {
     static func runNormalBenchmark() async {
         await runBenchmark(
             header: {
-                print("BenchmarkCLI - Foundation Models Benchmark")
-                print(String(repeating: "=", count: 80))
-                print("Using .productDesign prompt with greedy sampling (temp=0.1)")
-                print()
+                printAsciiBanner()
+                printEnvironmentInfo()
             },
             completionMessage: "Benchmark completed successfully!",
             includeResponsePreview: true,
@@ -110,6 +108,54 @@ struct BenchmarkCLI {
             print("Error: \(error)")
             exit(1)
         }
+    }
+
+    private static func printAsciiBanner() {
+        print("""
+    ╔══════════════════════════════════════════════════════════════════════════════╗
+    ║                                                                              ║
+    ║         ██╗  ██╗ █████╗ ███╗   ██╗██████╗  █████╗ ██████╗  █████╗ ██████╗      ║
+    ║         ██║  ██║██╔══██╗████╗  ██║██╔══██╗██╔══██╗██╔══██╗██╔══██╗██╔══██╗     ║
+    ║         ███████║███████║██╔██╗ ██║██║  ██║███████║██║  ██║███████║██████╔╝     ║
+    ║         ██╔══██║██╔══██║██║╚██╗██║██║  ██║██╔══██║██║  ██║██╔══██║██╔══██╗     ║
+    ║         ██║  ██║██║  ██║██║ ╚████║██████╔╝██║  ██║██████╔╝██║  ██║██║  ██║     ║
+    ║         ╚═╝  ╚═╝╚═╝  ╚═╝╚═╝  ╚═══╝╚═════╝ ╚═╝  ╚═╝╚═════╝ ╚═╝  ╚═╝╚═╝  ╚═╝     ║
+    ║                                                                              ║
+    ║                    Foundation Models Benchmarking Tool                        ║
+    ║                                                                              ║
+    ╚══════════════════════════════════════════════════════════════════════════════╝
+    """)
+        print(String(repeating: "=", count: 80))
+        print()
+    }
+
+    private static func printEnvironmentInfo() {
+        let environment = EnvironmentSnapshot.capture()
+
+        print("Environment")
+        print(String(repeating: "-", count: 40))
+        print("Device: \(environment.deviceName)")
+
+        // Display hardware information if available
+        if let cpuModel = environment.cpuModel {
+            let cores = environment.cpuCores ?? 0
+            print("CPU: \(cpuModel) \(cores)-core")
+        }
+
+        if let gpuModel = environment.gpuModel {
+            print("GPU: \(gpuModel)")
+        }
+
+        if let totalMemory = environment.totalMemory {
+            let memoryGB = Double(totalMemory) / (1024.0 * 1024.0 * 1024.0)
+            print("RAM: \(String(format: "%.0f GB", memoryGB))")
+        }
+
+        print("OS: \(environment.systemName) \(environment.systemVersion)")
+        print("Locale: \(environment.localeIdentifier)")
+        print()
+        print(String(repeating: "=", count: 80))
+        print()
     }
 }
 
